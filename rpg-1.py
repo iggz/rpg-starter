@@ -24,7 +24,7 @@ class Character:
         print("%s has %d health and %d power." % (self.name, self.health, self.power))
 
     def attack(self, enemy):
-        self.health -= enemy.power
+        enemy.health -= self.power
         print("%s did %d damage to the %s." % (self.name, self.power, enemy.name))
 
 
@@ -51,17 +51,20 @@ def main():
         #print("The goblin has %d health and %d power." % (goblin.health, goblin.power))
         hiro.print_status()
         goblin.print_status()
+        zombie.print_status()
 
         print()
         print("What do you want to do?")
         print("1. fight goblin")
         print("2. do nothing")
         print("3. flee")
+        print("4. fight zombie")
         print("> ",)
         user_input = input()
         if user_input == "1":
             hiro.attack(goblin)
-            
+            if goblin.health > 0:
+                goblin.attack(hiro)
             # Hero attacks goblin
             # goblin.health -= hiro.power
             # print("You do %d damage to the goblin." % hiro.power)
@@ -69,20 +72,25 @@ def main():
             #    print("The goblin is dead.")
                 
         elif user_input == "2":
-            pass
+            if goblin.health > 0:
+                goblin.attack(hiro)
+            
+        
         elif user_input == "3":
             print("Goodbye.")
             break
+        elif user_input == "4":
+            zombie.attack(hiro)
         else:
             print("Invalid input %r" % user_input)
 
-        if goblin.health > 0:
+        #if goblin.health > 0:
             # Goblin attacks hero
             #hiro.health -= goblin.power
-            goblin.attack(hiro)
+            #goblin.attack(hiro)
             #if hiro.health <= 0:
             #    print("You are dead.")
-            if goblin.health < 3:
-                zombie.attack(hiro)
+            #if goblin.health < 3:
+            #    zombie.attack(hiro)
 
 main()
